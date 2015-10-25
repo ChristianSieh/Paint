@@ -11,6 +11,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
+import paint.ShapeClasses.Shape;
 
 /** DrawPanel class
  *  This class configures the drawing panel to support mouse events.
@@ -61,8 +62,10 @@ public class DrawPanel extends JPanel implements MouseListener
     // paintComponent() is the display callback function
     public void paintComponent( Graphics g )
     {
+//        Shape myShape = new Shape();
         super.paintComponent( g );			// call superclass's paint method
         g.setColor( Color.BLUE );
-        g.drawLine( x1, y1, x2, y2 );
+//        g.Draw()
+        //g.drawLine( x1, y1, x2, y2 );
     }
 }

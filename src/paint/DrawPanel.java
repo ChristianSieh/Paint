@@ -11,6 +11,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
+import paint.ShapeClasses.Line;
 import paint.ShapeClasses.Shape;
 
 /** DrawPanel class
@@ -55,6 +56,8 @@ public class DrawPanel extends JPanel implements MouseListener
             y2 = event.getY();
             System.out.println( "Mouse left button release: (" + x2 + "," + y2 + ")" );
             leftButtonPress = false;
+            // TODO: determine leftX, leftY, rightX, rightY
+            
             repaint();
         }
     }
@@ -62,10 +65,22 @@ public class DrawPanel extends JPanel implements MouseListener
     // paintComponent() is the display callback function
     public void paintComponent( Graphics g )
     {
-//        Shape myShape = new Shape();
+        Line myShape = new Line();
+        myShape.leftX = x1;
+        myShape.leftY = y1;
+        myShape.rightX = x2;
+        myShape.rightY = y2;
         super.paintComponent( g );			// call superclass's paint method
-        g.setColor( Color.BLUE );
-//        g.Draw()
-        //g.drawLine( x1, y1, x2, y2 );
+        myShape.draw(g);
+//        g.setColor( Color.BLUE );
+////        g.Draw()
+//        g.drawLine( x1, y1, x2, y2 );
+    }
+    
+    public void compareCoords( int x1, int x2, int y1, int y2){
+        
+        if(x1 < x2){
+            
+        }
     }
 }

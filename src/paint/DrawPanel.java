@@ -11,8 +11,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
-import paint.ShapeClasses.Line;
-import paint.ShapeClasses.Shape;
+import paint.ShapeClasses.*;
 
 /** DrawPanel class
  *  This class configures the drawing panel to support mouse events.
@@ -65,13 +64,64 @@ public class DrawPanel extends JPanel implements MouseListener
     // paintComponent() is the display callback function
     public void paintComponent( Graphics g )
     {
-        Line myShape = new Line();
-        myShape.leftX = x1;
-        myShape.leftY = y1;
-        myShape.rightX = x2;
-        myShape.rightY = y2;
-        super.paintComponent( g );			// call superclass's paint method
-        myShape.draw(g);
+        switch(MenuFrame.selectedShape)
+        {
+            case ("Line"):
+                Line lineShape = new Line();
+                lineShape.leftX = x1;
+                lineShape.leftY = y1;
+                lineShape.rightX = x2;
+                lineShape.rightY = y2;
+                super.paintComponent( g );
+                lineShape.draw(g);
+                break;
+                
+            case ("Rectangle"):
+                Rectangle rectangleShape = new Rectangle();
+                rectangleShape.leftX = x1;
+                rectangleShape.leftY = y1;
+                rectangleShape.rightX = x2;
+                rectangleShape.rightY = y2;
+                super.paintComponent(g);
+                rectangleShape.draw(g);
+                break;
+                
+            case ("Filled Rectangle"):
+                FilledRectangle fRectangleShape = new FilledRectangle();
+                fRectangleShape.leftX = x1;
+                fRectangleShape.leftY = y1;
+                fRectangleShape.rightX = x2;
+                fRectangleShape.rightY = y2;
+                super.paintComponent(g);
+                fRectangleShape.draw(g);
+                break;
+                
+                case ("Ellipse"):
+                Ellipse ellipseShape = new Ellipse();
+                ellipseShape.leftX = x1;
+                ellipseShape.leftY = y1;
+                ellipseShape.rightX = x2;
+                ellipseShape.rightY = y2;
+                super.paintComponent(g);
+                ellipseShape.draw(g);
+                break;
+                
+            case ("Filled Ellipse"):
+                FilledEllipse fEllipseShape = new FilledEllipse();
+                fEllipseShape.leftX = x1;
+                fEllipseShape.leftY = y1;
+                fEllipseShape.rightX = x2;
+                fEllipseShape.rightY = y2;
+                super.paintComponent(g);
+                fEllipseShape.draw(g);
+                break;    
+                
+            default:
+                Line myShape = new Line();
+                myShape.draw(g);
+                break;
+        }
+        
 //        g.setColor( Color.BLUE );
 ////        g.Draw()
 //        g.drawLine( x1, y1, x2, y2 );

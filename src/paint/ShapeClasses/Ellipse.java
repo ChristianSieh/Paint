@@ -5,11 +5,24 @@
  */
 package paint.ShapeClasses;
 
+import java.awt.Color;
+import java.awt.Graphics;
+
 /**
  *
  * @author 1960681
  */
 public class Ellipse extends Shape
 {
+    public void draw(Graphics g){
+        g.setColor( Color.RED );
+        g.drawOval(leftX, leftY, rightX - leftX, rightY - leftY);
+    }
     
+    public void move(){
+        //stuff
+    }
+    public String toString(){
+        return "";
+    }
 }

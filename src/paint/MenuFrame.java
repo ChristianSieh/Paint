@@ -30,6 +30,8 @@ public class MenuFrame extends JFrame implements KeyListener
     private final String [] colorNames = { "Red", "Green", "Blue", "Yellow", "Magenta", "Orange", "Black", "White" };
     private JRadioButtonMenuItem [] shapeItems;
     private JRadioButtonMenuItem [] colorItems;
+    public static String selectedShape = "Line";
+    public static String selectedColor = "Black";
 
     // MenuDemo class methods //
     /** MenuFrame constructor
@@ -158,6 +160,7 @@ public class MenuFrame extends JFrame implements KeyListener
     // event handler for radio buttons
     public boolean shapeSelection( String s )
     {
+        selectedShape = s;
         for ( int i = 0; i < shapeNames.length; i++ )
         {
             if ( s == shapeNames[i] )
@@ -174,6 +177,7 @@ public class MenuFrame extends JFrame implements KeyListener
         // event handler for radio buttons
     public boolean colorSelection( String s )
     {
+        selectedColor = s;
         for ( int i = 0; i < colorNames.length; i++ )
         {
             if ( s == colorNames[i] )

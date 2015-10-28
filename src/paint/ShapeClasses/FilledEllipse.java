@@ -14,6 +14,10 @@ import java.awt.Graphics;
  */
 public class FilledEllipse extends Ellipse
 {
+    public FilledEllipse(int x1, int x2, int y1, int y2){
+        super(x1, x2, y1, y2);
+    }
+    
     public void draw(Graphics g){
         g.setColor( Color.BLUE );
         g.fillOval(leftX, leftY, rightX - leftX, rightY - leftY);

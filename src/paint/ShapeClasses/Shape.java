@@ -28,6 +28,14 @@ public abstract class Shape {
         shapeColor = Color.BLACK;
     }
     
+    public Shape(int x1, int x2, int y1, int y2){
+        leftX = x1;
+        rightX = x2;
+        leftY = y1;
+        rightY = y2;
+        shapeColor = Color.BLACK;
+    }
+    
     public abstract void draw(Graphics g);
     public abstract void move();
     public abstract String toString();

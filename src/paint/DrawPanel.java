@@ -5,10 +5,11 @@
  */
 package paint;
 
-import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.List;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import paint.ShapeClasses.*;
@@ -20,6 +21,7 @@ public class DrawPanel extends JPanel implements MouseListener
 {
     private int x1 = 0, y1 = 0, x2 = 0, y2 = 0;
     private boolean leftButtonPress = false;
+    private ArrayList<Shape> shapeList = new ArrayList<>();
 
     // constructor: set up window
     public DrawPanel()
@@ -55,8 +57,42 @@ public class DrawPanel extends JPanel implements MouseListener
             y2 = event.getY();
             System.out.println( "Mouse left button release: (" + x2 + "," + y2 + ")" );
             leftButtonPress = false;
-            // TODO: determine leftX, leftY, rightX, rightY
             
+            if(x2 < x1){
+                int temp = x2;
+                x2 = x1;
+                x1 = temp;
+                temp = y2;
+                y2 = y1;
+                y1 = temp;
+            }
+            
+            switch(MenuFrame.selectedShape)
+            {
+            case ("Line"):
+                shapeList.add(new Line(x1, x2, y1, y2));
+                break;
+                
+            case ("Rectangle"):
+                shapeList.add(new Rectangle(x1, x2, y1, y2));
+                break;
+                
+            case ("Filled Rectangle"):
+                shapeList.add(new FilledRectangle(x1, x2, y1, y2));
+                break;
+                
+                case ("Ellipse"):
+                shapeList.add(new Ellipse(x1, x2, y1, y2));
+                break;
+                
+            case ("Filled Ellipse"):
+                shapeList.add(new FilledEllipse(x1, x2, y1, y2));
+                break;    
+                
+            default:
+                shapeList.add(new Line(x1, x2, y1, y2));
+                break;
+            }
             repaint();
         }
     }
@@ -64,73 +100,22 @@ public class DrawPanel extends JPanel implements MouseListener
     // paintComponent() is the display callback function
     public void paintComponent( Graphics g )
     {
-        switch(MenuFrame.selectedShape)
+        super.paintComponent( g );
+        for(Shape x : shapeList)
         {
-            case ("Line"):
-                Line lineShape = new Line();
-                lineShape.leftX = x1;
-                lineShape.leftY = y1;
-                lineShape.rightX = x2;
-                lineShape.rightY = y2;
-                super.paintComponent( g );
-                lineShape.draw(g);
-                break;
-                
-            case ("Rectangle"):
-                Rectangle rectangleShape = new Rectangle();
-                rectangleShape.leftX = x1;
-                rectangleShape.leftY = y1;
-                rectangleShape.rightX = x2;
-                rectangleShape.rightY = y2;
-                super.paintComponent(g);
-                rectangleShape.draw(g);
-                break;
-                
-            case ("Filled Rectangle"):
-                FilledRectangle fRectangleShape = new FilledRectangle();
-                fRectangleShape.leftX = x1;
-                fRectangleShape.leftY = y1;
-                fRectangleShape.rightX = x2;
-                fRectangleShape.rightY = y2;
-                super.paintComponent(g);
-                fRectangleShape.draw(g);
-                break;
-                
-                case ("Ellipse"):
-                Ellipse ellipseShape = new Ellipse();
-                ellipseShape.leftX = x1;
-                ellipseShape.leftY = y1;
-                ellipseShape.rightX = x2;
-                ellipseShape.rightY = y2;
-                super.paintComponent(g);
-                ellipseShape.draw(g);
-                break;
-                
-            case ("Filled Ellipse"):
-                FilledEllipse fEllipseShape = new FilledEllipse();
-                fEllipseShape.leftX = x1;
-                fEllipseShape.leftY = y1;
-                fEllipseShape.rightX = x2;
-                fEllipseShape.rightY = y2;
-                super.paintComponent(g);
-                fEllipseShape.draw(g);
-                break;    
-                
-            default:
-                Line myShape = new Line();
-                myShape.draw(g);
-                break;
+            x.draw(g);
         }
-        
-//        g.setColor( Color.BLUE );
-////        g.Draw()
-//        g.drawLine( x1, y1, x2, y2 );
     }
     
     public void compareCoords( int x1, int x2, int y1, int y2){
         
-        if(x1 < x2){
-            
+        if(x2 < x1){
+            int temp = x2;
+            x2 = x1;
+            x1 = temp;
+            temp = y2;
+            y2 = y1;
+            y1 = temp;
         }
     }
 }

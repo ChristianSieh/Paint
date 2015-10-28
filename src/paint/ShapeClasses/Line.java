@@ -13,7 +13,11 @@ import java.awt.Graphics;
  * @author 1960681
  */
 public class Line extends Shape 
-{
+{   
+    public Line(int x1, int x2, int y1, int y2){
+        super(x1, x2, y1, y2);
+    }
+    
     public void draw(Graphics g){
         g.setColor( Color.RED );
         g.drawLine( leftX, leftY, rightX, rightY );

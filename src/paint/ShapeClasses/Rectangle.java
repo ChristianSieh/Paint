@@ -7,6 +7,7 @@ package paint.ShapeClasses;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import paint.MenuFrame;
 
 /**
  *
@@ -19,7 +20,7 @@ public class Rectangle extends Shape
     }
     
     public void draw(Graphics g){
-        g.setColor( Color.RED );
+        g.setColor(shapeColor);
         g.drawRect(upperLeftX, upperLeftY, lowerRightX - upperLeftX, lowerRightY - upperLeftY);
     }
     

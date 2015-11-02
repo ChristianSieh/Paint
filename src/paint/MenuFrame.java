@@ -5,20 +5,22 @@
  */
 package paint;
 
+import java.awt.Color;
 import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.io.File;
 import javax.swing.ButtonGroup;
-import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JRadioButtonMenuItem;
+import javax.swing.JColorChooser;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 /** MenuFrame class
  * This class does most of the heavy lifting: sets up window with dropdown menus and drawing area.
@@ -31,7 +33,7 @@ public class MenuFrame extends JFrame implements KeyListener
     private JRadioButtonMenuItem [] shapeItems;
     private JRadioButtonMenuItem [] colorItems;
     public static String selectedShape = "Line";
-    public static String selectedColor = "Black";
+    public static Color selectedColor;
     DrawPanel myPanel = new DrawPanel();
 
     // MenuDemo class methods //
@@ -41,7 +43,7 @@ public class MenuFrame extends JFrame implements KeyListener
     public MenuFrame()
     {
         // call superclass constructor with window title
-        super( "MenuDemo - click and drag to draw a line" );
+        super( "Paint" );
         addKeyListener( this );
         setSize( 640, 480 );
 
@@ -52,9 +54,44 @@ public class MenuFrame extends JFrame implements KeyListener
         // menu bar
         JMenuBar menuBar = new JMenuBar();
         setJMenuBar( menuBar );
+        
+        // File menu
+        JMenu menu = new JMenu( "File" );
+        menuBar.add( menu );
+        
+        JMenuItem mItem = new JMenuItem( "Delete Shape" );
+        mItem.addActionListener( new ActionListener()
+        {
+            public void actionPerformed( ActionEvent ae )
+            {
+                myPanel.delete();
+            }
+        } );
+        menu.add( mItem );
 
+        //Option to clear all shapes
+        mItem = new JMenuItem( "Clear Shapes" );
+        mItem.addActionListener( new ActionListener()
+        {
+            public void actionPerformed( ActionEvent ae )
+            {
+                myPanel.clear();
+            }
+        } );
+        menu.add( mItem );
+        
+        mItem = new JMenuItem( "Exit" );
+        mItem.addActionListener( new ActionListener()
+        {
+            public void actionPerformed( ActionEvent ae )
+            {
+                System.exit( 0 );
+            }
+        } );
+        menu.add( mItem );
+        
         // shape button menu example
-        JMenu menu = new JMenu( "Shapes" );
+        menu = new JMenu( "Shapes" );
         menuBar.add( menu );
         ButtonGroup shapeGroup = new ButtonGroup();
         shapeItems = new JRadioButtonMenuItem [ shapeNames.length ];
@@ -77,28 +114,37 @@ public class MenuFrame extends JFrame implements KeyListener
         // color button menu example
         menu = new JMenu( "Colors" );
         menuBar.add( menu );
-        ButtonGroup colorGroup = new ButtonGroup();
-        colorItems = new JRadioButtonMenuItem [ colorNames.length ];
-        for ( int i = 0; i < colorNames.length; i++ )
+//        ButtonGroup colorGroup = new ButtonGroup();
+//        colorItems = new JRadioButtonMenuItem [ colorNames.length ];
+//        for ( int i = 0; i < colorNames.length; i++ )
+//        {
+//            colorItems[i] = new JRadioButtonMenuItem( colorNames[i] );
+//            colorGroup.add( colorItems[i] );
+//            colorItems[i].addActionListener( new ActionListener()
+//            {
+//                public void actionPerformed( ActionEvent ae )
+//                {
+//                    colorSelection( ae.getActionCommand() );
+//                }
+//            } );
+//            menu.add( colorItems[i] );
+//        }
+        JColorChooser colorChooser = new JColorChooser();
+        menu.add(colorChooser);
+        colorChooser.getSelectionModel().addChangeListener( new ChangeListener()
         {
-            colorItems[i] = new JRadioButtonMenuItem( colorNames[i] );
-            colorGroup.add( colorItems[i] );
-            colorItems[i].addActionListener( new ActionListener()
-            {
-                public void actionPerformed( ActionEvent ae )
+                public void stateChanged(ChangeEvent e)
                 {
-                    colorSelection( ae.getActionCommand() );
+                    selectedColor = colorChooser.getColor();
                 }
-            } );
-            menu.add( colorItems[i] );
-        }
+        });
         // default radio button selection
-        colorItems[0].setSelected( true );
+        //colorItems[0].setSelected( true );
 
         // Help menu
         menu = new JMenu( "Help" );
         menuBar.add( menu );
-        JMenuItem mItem = new JMenuItem( "Help" );
+        mItem = new JMenuItem( "Help" );
         mItem.addActionListener( new ActionListener()
         {
             public void actionPerformed( ActionEvent ae )
@@ -112,7 +158,8 @@ public class MenuFrame extends JFrame implements KeyListener
         {
             public void actionPerformed( ActionEvent ae )
             {
-                JOptionPane.showMessageDialog( null, "MenuDemo, v.0.0.0", "About MenuDemo", JOptionPane.INFORMATION_MESSAGE );
+                JOptionPane.showMessageDialog( null, "Authors: Christian Sieh\n"
+                        + "Joe Mowry", "About Paint", JOptionPane.INFORMATION_MESSAGE );
             }
         } );
         menu.add( mItem );

@@ -7,6 +7,7 @@ package paint.ShapeClasses;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import paint.MenuFrame;
 
 /**
  *
@@ -49,7 +50,7 @@ public abstract class Shape {
         rightX = x2;
         leftY = y1;
         rightY = y2;
-        shapeColor = Color.BLACK;
+        shapeColor = MenuFrame.selectedColor;
         centerX = (x1 + x2) / 2;
         centerY = (y1 + y2) / 2;
     }

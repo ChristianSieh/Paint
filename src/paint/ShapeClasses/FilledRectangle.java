@@ -7,6 +7,7 @@ package paint.ShapeClasses;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import paint.MenuFrame;
 
 /**
  *

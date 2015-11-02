@@ -7,6 +7,7 @@ package paint.ShapeClasses;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import paint.MenuFrame;
 
 /**
  *
@@ -21,7 +22,7 @@ public class FilledEllipse extends Ellipse
     public void draw(Graphics g){
         g.setColor( Color.BLUE );
         g.fillOval(upperLeftX, upperLeftY, lowerRightX - upperLeftX, lowerRightY - upperLeftY);
-        g.setColor( Color.RED );
+        g.setColor( Color.RED);
         g.drawOval(upperLeftX, upperLeftY, lowerRightX - upperLeftX, lowerRightY - upperLeftY);
     }
     

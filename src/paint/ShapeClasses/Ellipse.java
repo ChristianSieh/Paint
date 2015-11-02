@@ -21,7 +21,7 @@ public class Ellipse extends Shape
         
     public void draw(Graphics g){
         g.setColor( Color.RED );
-        g.drawOval(leftX, leftY, rightX - leftX, rightY - leftY);
+        g.drawOval(upperLeftX, upperLeftY, lowerRightX - upperLeftX, lowerRightY - upperLeftY);
     }
     
     public void move(){

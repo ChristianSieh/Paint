@@ -6,10 +6,12 @@
 package paint;
 
 import java.awt.Graphics;
-import java.awt.List;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import paint.ShapeClasses.*;
@@ -117,5 +119,21 @@ public class DrawPanel extends JPanel implements MouseListener
             y2 = y1;
             y1 = temp;
         }
+    } 
+    
+    public void delete()
+    {
+        if ( shapeList.isEmpty())
+            return;
+        shapeList.remove(shapeList.size() - 1);
+        repaint();
+    }
+    
+    public void clear()
+    {
+        if ( shapeList.isEmpty())
+            return;
+        shapeList.clear();
+        repaint();
     }
 }

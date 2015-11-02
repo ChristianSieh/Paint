@@ -32,6 +32,7 @@ public class MenuFrame extends JFrame implements KeyListener
     private JRadioButtonMenuItem [] colorItems;
     public static String selectedShape = "Line";
     public static String selectedColor = "Black";
+    DrawPanel myPanel = new DrawPanel();
 
     // MenuDemo class methods //
     /** MenuFrame constructor
@@ -46,48 +47,14 @@ public class MenuFrame extends JFrame implements KeyListener
 
         // add drawing panel to content pane
         Container container = getContentPane();
-        container.add( new DrawPanel() );
+        container.add( myPanel );
 
         // menu bar
         JMenuBar menuBar = new JMenuBar();
         setJMenuBar( menuBar );
 
-        // File menu
-        JMenu menu = new JMenu( "File" );
-        menuBar.add( menu );
-        
-        JMenuItem mItem = new JMenuItem( "Open" );
-        mItem.addActionListener( new ActionListener()
-        {
-            public void actionPerformed( ActionEvent ae )
-            {
-                OpenFile();
-            }
-        } );
-        menu.add( mItem );
-        
-        mItem = new JMenuItem( "Save" );
-        mItem.addActionListener( new ActionListener()
-        {
-            public void actionPerformed( ActionEvent ae )
-            {
-                System.out.println( "File|Save selected." );
-            }
-        } );
-        menu.add( mItem );
-
-        mItem = new JMenuItem( "Quit" );
-        mItem.addActionListener( new ActionListener()
-        {
-            public void actionPerformed( ActionEvent ae )
-            {
-                System.exit( 0 );
-            }
-        } );
-        menu.add( mItem );
-
         // shape button menu example
-        menu = new JMenu( "Shapes" );
+        JMenu menu = new JMenu( "Shapes" );
         menuBar.add( menu );
         ButtonGroup shapeGroup = new ButtonGroup();
         shapeItems = new JRadioButtonMenuItem [ shapeNames.length ];
@@ -131,7 +98,7 @@ public class MenuFrame extends JFrame implements KeyListener
         // Help menu
         menu = new JMenu( "Help" );
         menuBar.add( menu );
-        mItem = new JMenuItem( "Help" );
+        JMenuItem mItem = new JMenuItem( "Help" );
         mItem.addActionListener( new ActionListener()
         {
             public void actionPerformed( ActionEvent ae )
@@ -191,27 +158,6 @@ public class MenuFrame extends JFrame implements KeyListener
         return false;
     }
 
-    // bring up a file chooser dialog
-    private void OpenFile()
-    {
-        // create a file chooser
-        JFileChooser fc = new JFileChooser();
-
-        // respond to menu selection
-        int returnVal = fc.showOpenDialog( this );
-
-        if ( returnVal == JFileChooser.APPROVE_OPTION )
-        {
-            File file = fc.getSelectedFile();
-            // this is where a real application would open the file.
-            System.out.println( "Opening: " + file.getName() );
-        }
-        else
-        {
-            System.out.println( "Open command cancelled by user." );
-        }
-    }
-
     // KeyListener methods
     public void keyReleased( KeyEvent event ) { }
     public void keyTyped( KeyEvent event ) { }
@@ -219,7 +165,15 @@ public class MenuFrame extends JFrame implements KeyListener
     // exit when Escape key is pressed
     public void keyPressed( KeyEvent event )
     {
-        if ( event.getKeyCode() == 27 )
+        if ( event.getKeyChar() == 'q')
             System.exit( 0 );
+        if ( event.getKeyChar() == 'd')
+        {
+            myPanel.delete();
+        }
+        if ( event.getKeyChar() == 'c')
+        {
+            myPanel.clear();
+        }
     }
 }

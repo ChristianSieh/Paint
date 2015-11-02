@@ -20,9 +20,9 @@ public class FilledEllipse extends Ellipse
     
     public void draw(Graphics g){
         g.setColor( Color.BLUE );
-        g.fillOval(leftX, leftY, rightX - leftX, rightY - leftY);
+        g.fillOval(upperLeftX, upperLeftY, lowerRightX - upperLeftX, lowerRightY - upperLeftY);
         g.setColor( Color.RED );
-        g.drawOval(leftX, leftY, rightX - leftX, rightY - leftY);
+        g.drawOval(upperLeftX, upperLeftY, lowerRightX - upperLeftX, lowerRightY - upperLeftY);
     }
     
     public void move(){

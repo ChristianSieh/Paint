@@ -20,7 +20,7 @@ public class Rectangle extends Shape
     
     public void draw(Graphics g){
         g.setColor( Color.RED );
-        g.drawRect(leftX, leftY, rightX - leftX, rightY - leftY);
+        g.drawRect(upperLeftX, upperLeftY, lowerRightX - upperLeftX, lowerRightY - upperLeftY);
     }
     
     public void move(){

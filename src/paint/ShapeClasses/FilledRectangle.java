@@ -20,9 +20,9 @@ public class FilledRectangle extends Rectangle
     }
     
     public void draw(Graphics g){
-        g.setColor( Color.BLUE );
+        g.setColor( fillColor );
         g.fillRect(upperLeftX, upperLeftY, lowerRightX - upperLeftX, lowerRightY - upperLeftY);
-        g.setColor( Color.RED );
+        g.setColor( shapeColor );
         g.drawRect(upperLeftX, upperLeftY, lowerRightX - upperLeftX, lowerRightY - upperLeftY);
     }
     

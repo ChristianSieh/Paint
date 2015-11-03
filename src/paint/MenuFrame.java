@@ -7,11 +7,13 @@ package paint;
 
 import java.awt.Color;
 import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import javax.swing.ButtonGroup;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -19,8 +21,6 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JColorChooser;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
 /** MenuFrame class
  * This class does most of the heavy lifting: sets up window with dropdown menus and drawing area.
@@ -29,11 +29,10 @@ public class MenuFrame extends JFrame implements KeyListener
 {
     // private data //
     private final String [] shapeNames = { "Line", "Rectangle", "Filled Rectangle", "Ellipse", "Filled Ellipse" };
-    private final String [] colorNames = { "Red", "Green", "Blue", "Yellow", "Magenta", "Orange", "Black", "White" };
     private JRadioButtonMenuItem [] shapeItems;
-    private JRadioButtonMenuItem [] colorItems;
     public static String selectedShape = "Line";
-    public static Color selectedColor;
+    public static Color outlineColor;
+    public static Color fillColor;
     DrawPanel myPanel = new DrawPanel();
 
     // MenuDemo class methods //
@@ -47,6 +46,8 @@ public class MenuFrame extends JFrame implements KeyListener
         addKeyListener( this );
         setSize( 640, 480 );
 
+        myPanel.setBackground(Color.WHITE);
+        
         // add drawing panel to content pane
         Container container = getContentPane();
         container.add( myPanel );
@@ -110,37 +111,36 @@ public class MenuFrame extends JFrame implements KeyListener
         }
         // default radio button selection
         shapeItems[0].setSelected( true );
-        
-        // color button menu example
-        menu = new JMenu( "Colors" );
-        menuBar.add( menu );
-//        ButtonGroup colorGroup = new ButtonGroup();
-//        colorItems = new JRadioButtonMenuItem [ colorNames.length ];
-//        for ( int i = 0; i < colorNames.length; i++ )
-//        {
-//            colorItems[i] = new JRadioButtonMenuItem( colorNames[i] );
-//            colorGroup.add( colorItems[i] );
-//            colorItems[i].addActionListener( new ActionListener()
-//            {
-//                public void actionPerformed( ActionEvent ae )
-//                {
-//                    colorSelection( ae.getActionCommand() );
-//                }
-//            } );
-//            menu.add( colorItems[i] );
-//        }
-        JColorChooser colorChooser = new JColorChooser();
-        menu.add(colorChooser);
-        colorChooser.getSelectionModel().addChangeListener( new ChangeListener()
-        {
-                public void stateChanged(ChangeEvent e)
-                {
-                    selectedColor = colorChooser.getColor();
-                }
-        });
-        // default radio button selection
-        //colorItems[0].setSelected( true );
 
+        //Outline Color
+        JButton btn = new JButton();
+        btn.setBackground( Color.BLACK);
+        btn.setToolTipText("Outline Color");
+        btn.setPreferredSize(new Dimension(20,20));
+        menuBar.add(btn);
+        btn.addActionListener(new ActionListener() 
+        {
+            JColorChooser outlineChooser = new JColorChooser();
+            public void actionPerformed(ActionEvent e){
+                outlineColor = JColorChooser.showDialog(btn, "Outline Color Chooser", outlineColor);
+                btn.setBackground(outlineColor);
+            }
+        });
+       
+        
+        JButton btn2 = new JButton();
+        btn2.setBackground( Color.BLACK);
+        btn2.setToolTipText("Fill Color");
+        menuBar.add(btn2);
+        btn2.addActionListener(new ActionListener() 
+        {
+            JColorChooser fillChooser = new JColorChooser();
+            public void actionPerformed(ActionEvent e){
+                fillColor = JColorChooser.showDialog(btn2, "Color Chooser", fillColor);
+                btn2.setBackground(fillColor);
+            }
+        });
+        
         // Help menu
         menu = new JMenu( "Help" );
         menuBar.add( menu );
@@ -182,23 +182,6 @@ public class MenuFrame extends JFrame implements KeyListener
                 System.out.println("you selected item " + shapeNames[i] );
                 for ( int j = 0; j < shapeNames.length; j++ )
                     shapeItems[j].setSelected( j == i );
-                return true;
-            }
-        }
-        return false;
-    }
-    
-        // event handler for radio buttons
-    public boolean colorSelection( String s )
-    {
-        selectedColor = s;
-        for ( int i = 0; i < colorNames.length; i++ )
-        {
-            if ( s == colorNames[i] )
-            {
-                System.out.println("you selected item " + colorNames[i] );
-                for ( int j = 0; j < colorNames.length; j++ )
-                    colorItems[j].setSelected( j == i );
                 return true;
             }
         }

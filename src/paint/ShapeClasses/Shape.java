@@ -24,6 +24,7 @@ public abstract class Shape {
     public int leftY;
     public int rightY;
     public Color shapeColor;
+    public Color fillColor;
     public float centerX;
     public float centerY;
 
@@ -37,6 +38,7 @@ public abstract class Shape {
         leftY = 0;
         rightY = 0;
         shapeColor = Color.BLACK;
+        fillColor = Color.BLACK;
         centerX = 0;
         centerY = 0;
     }
@@ -50,7 +52,8 @@ public abstract class Shape {
         rightX = x2;
         leftY = y1;
         rightY = y2;
-        shapeColor = MenuFrame.selectedColor;
+        shapeColor = MenuFrame.outlineColor;
+        fillColor = MenuFrame.fillColor;
         centerX = (x1 + x2) / 2;
         centerY = (y1 + y2) / 2;
     }

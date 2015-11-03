@@ -15,10 +15,22 @@ import paint.MenuFrame;
  */
 public class FilledEllipse extends Ellipse
 {
+
+    /**
+     *
+     * @param x1
+     * @param x2
+     * @param y1
+     * @param y2
+     */
     public FilledEllipse(int x1, int x2, int y1, int y2){
         super(x1, x2, y1, y2);
     }
     
+    /**
+     *
+     * @param g
+     */
     public void draw(Graphics g){
         g.setColor( fillColor );
         g.fillOval(upperLeftX, upperLeftY, lowerRightX - upperLeftX, lowerRightY - upperLeftY);
@@ -26,6 +38,9 @@ public class FilledEllipse extends Ellipse
         g.drawOval(upperLeftX, upperLeftY, lowerRightX - upperLeftX, lowerRightY - upperLeftY);
     }
     
+    /**
+     *
+     */
     public void move(){
         //stuff
     }

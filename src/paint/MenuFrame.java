@@ -23,40 +23,48 @@ import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JColorChooser;
 
 /** MenuFrame class
- * This class does most of the heavy lifting: sets up window with dropdown menus and drawing area.
+ * @author Dr. John Weiss(Original author for this class. Later mentioned as JW)
+ * @author Christian Sieh
+ * @author Joe Mowry
+ * This class extends JFrame and implements the menus and buttons for the
+ * paint program. Also, handles key events.
  */
 public class MenuFrame extends JFrame implements KeyListener
 {
     // private data //
-    private final String [] shapeNames = { "Line", "Rectangle", "Filled Rectangle", "Ellipse", "Filled Ellipse" };
+    private final String [] shapeNames = { "Line", 
+        "Rectangle", "Filled Rectangle", "Ellipse", "Filled Ellipse" };
     private JRadioButtonMenuItem [] shapeItems;
     public static String selectedShape = "Line";
     public static Color outlineColor = Color.BLACK;
     public static Color fillColor = Color.BLACK;
     DrawPanel myPanel = new DrawPanel();
 
-    // MenuDemo class methods //
+    // Paint class methods //
     /** MenuFrame constructor
+     * @author Dr. John Weiss (original author for this method)
+     * @author Christian Sieh
+     * @author Joe Mowry
      *  This constructor builds the GUI.
      */
     public MenuFrame()
     {
-        // call superclass constructor with window title
+        // call superclass constructor with window title - JW
         super( "Paint" );
         addKeyListener( this );
         setSize( 640, 480 );
 
         myPanel.setBackground(Color.WHITE);
         
-        // add drawing panel to content pane
+        // add drawing panel to content pane - JW
         Container container = getContentPane();
         container.add( myPanel );
 
-        // menu bar
+        // menu bar - JW
         JMenuBar menuBar = new JMenuBar();
         setJMenuBar( menuBar );
         
-        // File menu
+        // File menu - JW
         JMenu menu = new JMenu( "File" );
         menuBar.add( menu );
         
@@ -70,6 +78,7 @@ public class MenuFrame extends JFrame implements KeyListener
         } );
         menu.add( mItem );
         
+        //Option to undo the last delete
         mItem = new JMenuItem( "Undo Delete" );
         mItem.addActionListener( new ActionListener()
         {
@@ -91,6 +100,7 @@ public class MenuFrame extends JFrame implements KeyListener
         } );
         menu.add( mItem );
         
+        //Option to exit the program
         mItem = new JMenuItem( "Exit" );
         mItem.addActionListener( new ActionListener()
         {
@@ -101,7 +111,7 @@ public class MenuFrame extends JFrame implements KeyListener
         } );
         menu.add( mItem );
         
-        // shape button menu example
+        // shape button menu example - JW
         menu = new JMenu( "Shapes" );
         menuBar.add( menu );
         ButtonGroup shapeGroup = new ButtonGroup();
@@ -122,37 +132,47 @@ public class MenuFrame extends JFrame implements KeyListener
         // default radio button selection
         shapeItems[0].setSelected( true );
 
-        //Outline Color
-        JButton btn = new JButton();
-        btn.setBackground( Color.BLACK);
-        btn.setToolTipText("Outline Color");
-        btn.setFocusable(false);
-        menuBar.add(btn);
+        //Outline Color Button
+        JButton outlineBtn = new JButton();
+        //Default color
+        outlineBtn.setBackground( Color.BLACK);
+        outlineBtn.setToolTipText("Outline Color");
+        
+        //Disables focusing on the button so the program will stay focused
+        //on the MenuFrame. Needed so key events got to the MenuFrame instead
+        //of to the buttons
+        outlineBtn.setFocusable(false);
+        menuBar.add(outlineBtn);
+        //The following code adds a JColorChooser component when the outlineBtn
+        //is clicked so the user can selected a new color for the outline.
+        //It handles this by using an actionListener
         JColorChooser outlineChooser = new JColorChooser();
-        btn.addActionListener(new ActionListener() 
+        outlineBtn.addActionListener(new ActionListener() 
         {
             public void actionPerformed(ActionEvent e){
-                outlineColor = outlineChooser.showDialog(btn, "Outline Color Chooser", outlineColor);
-                btn.setBackground(outlineColor);
+                outlineColor = outlineChooser.showDialog(outlineBtn, 
+                        "Outline Color Chooser", outlineColor);
+                outlineBtn.setBackground(outlineColor);
             }
         });
        
         
-        JButton btn2 = new JButton();
-        btn2.setBackground( Color.BLACK);
-        btn2.setToolTipText("Fill Color");
-        btn2.setFocusable(false);
-        menuBar.add(btn2);
+        //Fill Color
+        JButton fillBtn = new JButton();
+        fillBtn.setBackground( Color.BLACK);
+        fillBtn.setToolTipText("Fill Color");
+        fillBtn.setFocusable(false);
+        menuBar.add(fillBtn);
         JColorChooser fillChooser = new JColorChooser();
-        btn2.addActionListener(new ActionListener() 
+        fillBtn.addActionListener(new ActionListener() 
         {
             public void actionPerformed(ActionEvent e){
-                fillColor = fillChooser.showDialog(btn2, "Fill Color Chooser", fillColor);
-                btn2.setBackground(fillColor);
+                fillColor = fillChooser.showDialog(fillBtn, "Fill Color Chooser", fillColor);
+                fillBtn.setBackground(fillColor);
             }
         });
         
-        // Help menu
+        // Help menu - JW
         menu = new JMenu( "Help" );
         menuBar.add( menu );
         mItem = new JMenuItem( "Help" );
@@ -164,6 +184,7 @@ public class MenuFrame extends JFrame implements KeyListener
             }
         } );
         
+        //About Menu
         menu.add( mItem );
         mItem = new JMenuItem( "About" );
         mItem.addActionListener( new ActionListener()
@@ -184,7 +205,13 @@ public class MenuFrame extends JFrame implements KeyListener
     }
 
     // event handler for radio buttons
-    public boolean shapeSelection( String s )
+
+    /**
+     *
+     * @param s
+     * @return
+     */
+        public boolean shapeSelection( String s )
     {
         selectedShape = s;
         for ( int i = 0; i < shapeNames.length; i++ )

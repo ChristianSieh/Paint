@@ -15,15 +15,30 @@ import paint.MenuFrame;
  */
 public class Line extends Shape 
 {   
+
+    /**
+     *
+     * @param x1
+     * @param x2
+     * @param y1
+     * @param y2
+     */
     public Line(int x1, int x2, int y1, int y2){
         super(x1, x2, y1, y2);
     }
     
+    /**
+     *
+     * @param g
+     */
     public void draw(Graphics g){
         g.setColor( shapeColor );
         g.drawLine( leftX, leftY, rightX, rightY );
     }
     
+    /**
+     *
+     */
     public void move(){
         //stuff
     }

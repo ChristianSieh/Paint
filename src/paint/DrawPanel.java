@@ -21,8 +21,10 @@ import paint.ShapeClasses.*;
  */
 public class DrawPanel extends JPanel implements MouseListener
 {
-    private int x1 = 0, y1 = 0, x2 = 0, y2 = 0;
-    private boolean leftButtonPress = false;
+    //TODO: set up a size depending on the shape
+    private int x1 = 0, y1 = 0, x2 = 0, y2 = 0, size;
+    private boolean leftButtonPress = false, dragging = false;
+    private double offsetX = 0, offsetY = 0;
     private ArrayList<Shape> shapeList = new ArrayList<>();
 
     // constructor: set up window
@@ -48,8 +50,37 @@ public class DrawPanel extends JPanel implements MouseListener
             System.out.println( "Mouse left button click: (" + x1 + "," + y1 + ")" );
             leftButtonPress = true;
         }
+//        if ( SwingUtilities.isRightMouseButton(event))
+//        {
+//            //TODO: this
+//            double newX = event.getX();
+//            double newY = event.getY();
+//            
+//            if(newX > x1 && newX < x2 && newY > y1 && newY < y2)
+//            {
+//                dragging = true;
+//                offsetX = newX - x1;
+//                offsetY = newY - y1;
+//            }
+//        }
     }
 
+//    public void mouseDragged(MouseEvent event)
+//    {
+//        if(dragging)
+//        {
+//            double newX = event.getX();
+//            double newY = event.getY();
+//            
+//            x1 = newX - offsetX;
+//            y1 = newY - offsetY;
+//            x2 = x1 + size;
+//            y2 = y1 + size;
+//            //TODO: get current closest shape
+//            //repaint();
+//        }
+//    }
+    
     // mouse button release events (finish drawing)
     public void mouseReleased( MouseEvent event )
     {

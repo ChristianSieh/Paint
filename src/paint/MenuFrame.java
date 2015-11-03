@@ -126,7 +126,7 @@ public class MenuFrame extends JFrame implements KeyListener
         JButton btn = new JButton();
         btn.setBackground( Color.BLACK);
         btn.setToolTipText("Outline Color");
-        btn.setPreferredSize(new Dimension(20,20));
+        btn.setFocusable(false);
         menuBar.add(btn);
         JColorChooser outlineChooser = new JColorChooser();
         btn.addActionListener(new ActionListener() 
@@ -141,6 +141,7 @@ public class MenuFrame extends JFrame implements KeyListener
         JButton btn2 = new JButton();
         btn2.setBackground( Color.BLACK);
         btn2.setToolTipText("Fill Color");
+        btn2.setFocusable(false);
         menuBar.add(btn2);
         JColorChooser fillChooser = new JColorChooser();
         btn2.addActionListener(new ActionListener() 
@@ -162,6 +163,7 @@ public class MenuFrame extends JFrame implements KeyListener
                 System.out.println( "Abandon all help, ye who enter here." );
             }
         } );
+        
         menu.add( mItem );
         mItem = new JMenuItem( "About" );
         mItem.addActionListener( new ActionListener()
@@ -199,8 +201,14 @@ public class MenuFrame extends JFrame implements KeyListener
     }
 
     // KeyListener methods
-    public void keyReleased( KeyEvent event ) { }
-    public void keyTyped( KeyEvent event ) { }
+    public void keyReleased( KeyEvent event ) 
+    { 
+        int test = 0;
+    }
+    public void keyTyped( KeyEvent event ) 
+    {
+        int test = 0;
+    }
 
     // exit when Escape key is pressed
     public void keyPressed( KeyEvent event )
@@ -208,12 +216,14 @@ public class MenuFrame extends JFrame implements KeyListener
         if ( event.getKeyChar() == 'q')
             System.exit( 0 );
         if ( event.getKeyChar() == 'd')
-        {
             myPanel.delete();
-        }
+        
         if ( event.getKeyChar() == 'c')
-        {
             myPanel.clear();
+        
+        if ( event.isControlDown() && event.getKeyChar() != 'z' && event.getKeyCode() == 90)
+        {
+            myPanel.undo();
         }
     }
 }

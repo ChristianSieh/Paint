@@ -138,18 +138,6 @@ public class DrawPanel extends JPanel implements MouseListener
         }
     }
     
-    public void compareCoords( int x1, int x2, int y1, int y2){
-        
-        if(x2 < x1){
-            int temp = x2;
-            x2 = x1;
-            x1 = temp;
-            temp = y2;
-            y2 = y1;
-            y1 = temp;
-        }
-    } 
-    
     public void delete()
     {
         if ( shapeList.isEmpty())
@@ -173,6 +161,7 @@ public class DrawPanel extends JPanel implements MouseListener
         shapeList.clear();
         repaint();
     }
+    
     
     public void undo()
     {

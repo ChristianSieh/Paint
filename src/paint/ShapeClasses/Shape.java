@@ -72,6 +72,16 @@ public abstract class Shape {
      */
     public float centerY;
 
+    public void setCoords(int x, int y){
+        upperLeftX = x;
+        upperLeftY = y;
+    }
+    public void setCenter(int x1, int y1, int x2, int y2){
+        centerX = (x1 + x2) / 2;
+        centerY = (y1 + y2) / 2;
+    }
+
+    
     /**
      * Default constructor used to initialize all of the variables.
      */
@@ -101,6 +111,7 @@ public abstract class Shape {
      * @param y1
      * @param y2
      */
+   
     public Shape(int x1, int x2, int y1, int y2){
         upperLeftX = min(x1, x2);
         upperLeftY = min(y1, y2);

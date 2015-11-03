@@ -6,8 +6,11 @@
 package paint;
 
 import java.awt.Graphics;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import static java.lang.Math.pow;
+import static java.lang.Math.sqrt;
 import java.util.ArrayList;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
@@ -20,8 +23,8 @@ public class DrawPanel extends JPanel implements MouseListener
 {
     //TODO: set up a size depending on the shape
     private int x1 = 0, y1 = 0, x2 = 0, y2 = 0, size;
-    private boolean leftButtonPress = false, dragging = false;
-    private double offsetX = 0, offsetY = 0;
+    private boolean leftButtonPress = false, rightButtonPress = false;
+    private int offsetX = 0, offsetY = 0;
     private ArrayList<Shape> shapeList = new ArrayList<>();
     private ArrayList<Shape> undoList = new ArrayList<>();
 
@@ -29,7 +32,7 @@ public class DrawPanel extends JPanel implements MouseListener
     public DrawPanel()
     {
         // detect mouse click events
-        addMouseListener( this );
+        addMouseListener( this );       
     }
 
     // must override the following MouseListener methods
@@ -48,37 +51,15 @@ public class DrawPanel extends JPanel implements MouseListener
             System.out.println( "Mouse left button click: (" + x1 + "," + y1 + ")" );
             leftButtonPress = true;
         }
-//        if ( SwingUtilities.isRightMouseButton(event))
-//        {
-//            //TODO: this
-//            double newX = event.getX();
-//            double newY = event.getY();
-//            
-//            if(newX > x1 && newX < x2 && newY > y1 && newY < y2)
-//            {
-//                dragging = true;
-//                offsetX = newX - x1;
-//                offsetY = newY - y1;
-//            }
-//        }
+        if ( SwingUtilities.isRightMouseButton(event))
+        {
+            x1 = event.getX();
+            y1 = event.getY();
+            System.out.println( "Mouse right button click: (" + x1 + "," + y1 + ")" );
+            rightButtonPress = true;
+        }
     }
-
-//    public void mouseDragged(MouseEvent event)
-//    {
-//        if(dragging)
-//        {
-//            double newX = event.getX();
-//            double newY = event.getY();
-//            
-//            x1 = newX - offsetX;
-//            y1 = newY - offsetY;
-//            x2 = x1 + size;
-//            y2 = y1 + size;
-//            //TODO: get current closest shape
-//            //repaint();
-//        }
-//    }
-    
+  
     // mouse button release events (finish drawing)
     public void mouseReleased( MouseEvent event )
     {
@@ -126,6 +107,63 @@ public class DrawPanel extends JPanel implements MouseListener
             }
             repaint();
         }
+        if ( rightButtonPress ){
+            x2 = event.getX();
+            y2 = event.getY();
+            System.out.println( "Mouse right button release: (" + x2 + "," + y2 + ")" );
+            
+            rightButtonPress = false;
+            //determine closest shape
+            int index = findClosestShape();
+            
+            if(index == -1)
+            {
+                return;
+            }
+            
+            //move the shape at that index
+            Shape temp = shapeList.get(index);
+            shapeList.remove(index);
+            shapeList.add(temp);
+
+            //update coords
+            shapeList.get(shapeList.size()-1).setCoords(x2, y2);
+            shapeList.get(shapeList.size()-1).setCenter(x1, y1, x2, y2);
+            
+            repaint();
+        }
+    }
+    
+    public void moveSquare(int x, int y){
+        
+    }
+    
+    public int findClosestShape(){
+        double min = Double.MAX_VALUE;
+        double currentResult = 0;
+        int minIndex = -1;
+        int i = 0;
+        
+        for(i = 0; i < shapeList.size(); i++){
+            System.out.println( "shape " + i + " centerX: " + shapeList.get(i).centerX);
+            System.out.println( "shape " + i + " centerY: " + shapeList.get(i).centerY);
+            currentResult = euclideanDistance(shapeList.get(i).centerX, shapeList.get(i).centerY, x1, y1);
+            System.out.println( "distance: " + currentResult);
+
+            if(currentResult < 25)
+            {
+                if(currentResult < min){
+                    min = currentResult;
+                    minIndex = i;
+                }
+            }
+        }
+        System.out.println( "index of closest: " + minIndex);
+        return minIndex;
+    }
+    
+    public double euclideanDistance(double centerX, double centerY, double x2, double y2){
+        return sqrt(pow((centerX-x2),2) + pow((centerY-y2),2));
     }
 
     // paintComponent() is the display callback function

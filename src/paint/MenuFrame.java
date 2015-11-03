@@ -31,8 +31,8 @@ public class MenuFrame extends JFrame implements KeyListener
     private final String [] shapeNames = { "Line", "Rectangle", "Filled Rectangle", "Ellipse", "Filled Ellipse" };
     private JRadioButtonMenuItem [] shapeItems;
     public static String selectedShape = "Line";
-    public static Color outlineColor;
-    public static Color fillColor;
+    public static Color outlineColor = Color.BLACK;
+    public static Color fillColor = Color.BLACK;
     DrawPanel myPanel = new DrawPanel();
 
     // MenuDemo class methods //
@@ -128,11 +128,11 @@ public class MenuFrame extends JFrame implements KeyListener
         btn.setToolTipText("Outline Color");
         btn.setPreferredSize(new Dimension(20,20));
         menuBar.add(btn);
+        JColorChooser outlineChooser = new JColorChooser();
         btn.addActionListener(new ActionListener() 
         {
-            JColorChooser outlineChooser = new JColorChooser();
             public void actionPerformed(ActionEvent e){
-                outlineColor = JColorChooser.showDialog(btn, "Outline Color Chooser", outlineColor);
+                outlineColor = outlineChooser.showDialog(btn, "Outline Color Chooser", outlineColor);
                 btn.setBackground(outlineColor);
             }
         });
@@ -142,11 +142,11 @@ public class MenuFrame extends JFrame implements KeyListener
         btn2.setBackground( Color.BLACK);
         btn2.setToolTipText("Fill Color");
         menuBar.add(btn2);
+        JColorChooser fillChooser = new JColorChooser();
         btn2.addActionListener(new ActionListener() 
         {
-            JColorChooser fillChooser = new JColorChooser();
             public void actionPerformed(ActionEvent e){
-                fillColor = JColorChooser.showDialog(btn2, "Color Chooser", fillColor);
+                fillColor = fillChooser.showDialog(btn2, "Fill Color Chooser", fillColor);
                 btn2.setBackground(fillColor);
             }
         });

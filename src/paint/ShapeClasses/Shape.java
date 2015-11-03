@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package paint.ShapeClasses;
 
 import java.awt.Color;
@@ -10,24 +5,76 @@ import java.awt.Graphics;
 import paint.MenuFrame;
 
 /**
- *
- * @author 1960681
+ * @author Christian Sieh
+ * 
+ * This class is the abstract class from which all other shapes will inherit
+ * from. 
  */
 public abstract class Shape {
     
+    /**
+     *
+     */
     public int upperLeftX;
+
+    /**
+     *
+     */
     public int upperLeftY;
+
+    /**
+     *
+     */
     public int lowerRightX;
+
+    /**
+     *
+     */
     public int lowerRightY;
+
+    /**
+     *
+     */
     public int leftX;
+
+    /**
+     *
+     */
     public int rightX;
+
+    /**
+     *
+     */
     public int leftY;
+
+    /**
+     *
+     */
     public int rightY;
+
+    /**
+     *
+     */
     public Color shapeColor;
+
+    /**
+     *
+     */
     public Color fillColor;
+
+    /**
+     *
+     */
     public float centerX;
+
+    /**
+     *
+     */
     public float centerY;
 
+    /**
+     * Default constructor used to initialize all of the variables.
+     */
     public Shape(){
         upperLeftX = 0;
         upperLeftY = 0;
@@ -43,6 +90,17 @@ public abstract class Shape {
         centerY = 0;
     }
     
+    /**
+     * @author Christian Sieh
+     * 
+     * Constructor used when 4 coordinate values are passed in. Sets the upper
+     * left corner of the shape, the colors, and the center point.
+     * 
+     * @param x1
+     * @param x2
+     * @param y1
+     * @param y2
+     */
     public Shape(int x1, int x2, int y1, int y2){
         upperLeftX = min(x1, x2);
         upperLeftY = min(y1, y2);
@@ -58,10 +116,40 @@ public abstract class Shape {
         centerY = (y1 + y2) / 2;
     }
     
+    /**
+     * @author Christian Sieh
+     * 
+     * An abstract method that will be used to draw shapes.
+     * 
+     * @param g
+     */
     public abstract void draw(Graphics g);
+
+    /**
+     * @author Christian Sieh
+     * 
+     * An abstract method that will be used to move shapes around on the screen.
+     */
     public abstract void move();
+    
+    /**
+     * @author Christian Sieh
+     * 
+     * An abstract method that will print information about each shape to the
+     * console.
+     * @return 
+     */
     public abstract String toString();
     
+    /**
+     * @author Christian Sieh
+     * 
+     * A function that returns the minimum of the two integer values.
+     * 
+     * @param x1
+     * @param x2
+     * @return
+     */
     public int min (int x1, int x2)
     {
         if ( x1 < x2 )
@@ -69,6 +157,15 @@ public abstract class Shape {
         return x2;
     }
     
+    /**
+     * @author Christian Sieh
+     * 
+     * A function that returns the maximum of the two integer values.
+     * 
+     * @param x1
+     * @param x2
+     * @return
+     */
     public int max (int x1, int x2)
     {
         if ( x1 > x2 )

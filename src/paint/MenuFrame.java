@@ -1,13 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package paint;
 
 import java.awt.Color;
 import java.awt.Container;
-import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -26,6 +20,7 @@ import javax.swing.JColorChooser;
  * @author Dr. John Weiss(Original author for this class. Later mentioned as JW)
  * @author Christian Sieh
  * @author Joe Mowry
+ * 
  * This class extends JFrame and implements the menus and buttons for the
  * paint program. Also, handles key events.
  */
@@ -42,10 +37,14 @@ public class MenuFrame extends JFrame implements KeyListener
 
     // Paint class methods //
     /** MenuFrame constructor
-     * @author Dr. John Weiss (original author for this method)
+     * @author Dr. John Weiss (original author for this constructor)
      * @author Christian Sieh
      * @author Joe Mowry
-     *  This constructor builds the GUI.
+     * 
+     *  This constructor builds the GUI by adding a container that holds the
+     * DrawPanel and a MenuBar with various menus and menu items. The menu
+     * bar also has two buttons that handle outline and fill color as well as
+     * having text tool tips.
      */
     public MenuFrame()
     {
@@ -69,24 +68,16 @@ public class MenuFrame extends JFrame implements KeyListener
         menuBar.add( menu );
         
         JMenuItem mItem = new JMenuItem( "Delete Shape" );
-        mItem.addActionListener( new ActionListener()
-        {
-            public void actionPerformed( ActionEvent ae )
-            {
-                myPanel.delete();
-            }
-        } );
+        mItem.addActionListener((ActionEvent ae) -> {
+            myPanel.delete();
+        });
         menu.add( mItem );
         
         //Option to undo the last delete
         mItem = new JMenuItem( "Undo Delete" );
-        mItem.addActionListener( new ActionListener()
-        {
-            public void actionPerformed( ActionEvent ae )
-            {
-                myPanel.undo();
-            }
-        } );
+        mItem.addActionListener((ActionEvent ae) -> {
+            myPanel.undo();
+        });
         menu.add( mItem );
 
         //Option to clear all shapes
@@ -102,13 +93,9 @@ public class MenuFrame extends JFrame implements KeyListener
         
         //Option to exit the program
         mItem = new JMenuItem( "Exit" );
-        mItem.addActionListener( new ActionListener()
-        {
-            public void actionPerformed( ActionEvent ae )
-            {
-                System.exit( 0 );
-            }
-        } );
+        mItem.addActionListener((ActionEvent ae) -> {
+            System.exit( 0 );
+        });
         menu.add( mItem );
         
         // shape button menu example - JW
@@ -120,13 +107,9 @@ public class MenuFrame extends JFrame implements KeyListener
         {
             shapeItems[i] = new JRadioButtonMenuItem( shapeNames[i] );
             shapeGroup.add( shapeItems[i] );
-            shapeItems[i].addActionListener( new ActionListener()
-            {
-                public void actionPerformed( ActionEvent ae )
-                {
-                    shapeSelection( ae.getActionCommand() );
-                }
-            } );
+            shapeItems[i].addActionListener((ActionEvent ae) -> {
+                shapeSelection( ae.getActionCommand() );
+            });
             menu.add( shapeItems[i] );
         }
         // default radio button selection
@@ -147,13 +130,10 @@ public class MenuFrame extends JFrame implements KeyListener
         //is clicked so the user can selected a new color for the outline.
         //It handles this by using an actionListener
         JColorChooser outlineChooser = new JColorChooser();
-        outlineBtn.addActionListener(new ActionListener() 
-        {
-            public void actionPerformed(ActionEvent e){
-                outlineColor = outlineChooser.showDialog(outlineBtn, 
-                        "Outline Color Chooser", outlineColor);
-                outlineBtn.setBackground(outlineColor);
-            }
+        outlineBtn.addActionListener((ActionEvent e) -> {
+            outlineColor = JColorChooser.showDialog(outlineBtn,
+                    "Outline Color Chooser", outlineColor);
+            outlineBtn.setBackground(outlineColor);
         });
        
         
@@ -164,59 +144,50 @@ public class MenuFrame extends JFrame implements KeyListener
         fillBtn.setFocusable(false);
         menuBar.add(fillBtn);
         JColorChooser fillChooser = new JColorChooser();
-        fillBtn.addActionListener(new ActionListener() 
-        {
-            public void actionPerformed(ActionEvent e){
-                fillColor = fillChooser.showDialog(fillBtn, "Fill Color Chooser", fillColor);
-                fillBtn.setBackground(fillColor);
-            }
+        fillBtn.addActionListener((ActionEvent e) -> {
+            fillColor = JColorChooser.showDialog(fillBtn,
+                    "Fill Color Chooser", fillColor);
+            fillBtn.setBackground(fillColor);
         });
         
         // Help menu - JW
         menu = new JMenu( "Help" );
         menuBar.add( menu );
         mItem = new JMenuItem( "Help" );
-        mItem.addActionListener( new ActionListener()
-        {
-            public void actionPerformed( ActionEvent ae )
-            {
-                System.out.println( "Abandon all help, ye who enter here." );
-            }
-        } );
-        
-        //About Menu
+        mItem.addActionListener((ActionEvent ae) -> {
+            System.out.println( "Abandon all help, ye who enter here." );
+        });
+        //About Item - JW
         menu.add( mItem );
         mItem = new JMenuItem( "About" );
-        mItem.addActionListener( new ActionListener()
-        {
-            public void actionPerformed( ActionEvent ae )
-            {
-                JOptionPane.showMessageDialog( null, "Authors: Christian Sieh\n"
-                        + "Joe Mowry", "About Paint", JOptionPane.INFORMATION_MESSAGE );
-            }
-        } );
+        mItem.addActionListener((ActionEvent ae) -> {
+            JOptionPane.showMessageDialog( null, "Authors: Christian Sieh\n"
+                    + "Joe Mowry", "About Paint",
+                    JOptionPane.INFORMATION_MESSAGE );
+        });
         menu.add( mItem );
 
-        // set initial window size
+        // set initial window size - JW
         setSize( 640, 480 );
 
-        // display window
+        // display window - JW
         setVisible( true );
     }
 
-    // event handler for radio buttons
-
     /**
-     *
+     * @author John Weiss
      * @param s
      * @return
+     * 
+     * This method will set the shape selection based on the radio button
+     * selected in the Shape menu.
      */
-        public boolean shapeSelection( String s )
+    public boolean shapeSelection( String s )
     {
         selectedShape = s;
         for ( int i = 0; i < shapeNames.length; i++ )
         {
-            if ( s == shapeNames[i] )
+            if ( s == null ? shapeNames[i] == null : s.equals(shapeNames[i]) )
             {
                 System.out.println("you selected item " + shapeNames[i] );
                 for ( int j = 0; j < shapeNames.length; j++ )
@@ -227,28 +198,32 @@ public class MenuFrame extends JFrame implements KeyListener
         return false;
     }
 
-    // KeyListener methods
-    public void keyReleased( KeyEvent event ) 
-    { 
-        int test = 0;
-    }
-    public void keyTyped( KeyEvent event ) 
-    {
-        int test = 0;
-    }
+    // KeyListener methods - JW
+    @Override
+    public void keyReleased( KeyEvent event ) { }
+    @Override
+    public void keyTyped( KeyEvent event ) { }
 
-    // exit when Escape key is pressed
+    /**
+     * @author Christian Sieh
+     * 
+     * This method will handle when a key is pressed by the user.
+     */
+    @Override
     public void keyPressed( KeyEvent event )
     {
+        //Exits the application
         if ( event.getKeyChar() == 'q')
             System.exit( 0 );
+        //Deletes the most recently drawn shape
         if ( event.getKeyChar() == 'd')
             myPanel.delete();
-        
+        //Clears all shapes on the screen
         if ( event.getKeyChar() == 'c')
             myPanel.clear();
-        
-        if ( event.isControlDown() && event.getKeyChar() != 'z' && event.getKeyCode() == 90)
+        //When Ctrl + z is pressed it will undo the last delete
+        if ( event.isControlDown() && event.getKeyChar() != 'z' 
+                && event.getKeyCode() == 90)
         {
             myPanel.undo();
         }

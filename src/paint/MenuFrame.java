@@ -69,6 +69,16 @@ public class MenuFrame extends JFrame implements KeyListener
             }
         } );
         menu.add( mItem );
+        
+        mItem = new JMenuItem( "Undo Delete" );
+        mItem.addActionListener( new ActionListener()
+        {
+            public void actionPerformed( ActionEvent ae )
+            {
+                myPanel.undo();
+            }
+        } );
+        menu.add( mItem );
 
         //Option to clear all shapes
         mItem = new JMenuItem( "Clear Shapes" );

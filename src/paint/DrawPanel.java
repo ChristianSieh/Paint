@@ -23,6 +23,7 @@ public class DrawPanel extends JPanel implements MouseListener
     private boolean leftButtonPress = false, dragging = false;
     private double offsetX = 0, offsetY = 0;
     private ArrayList<Shape> shapeList = new ArrayList<>();
+    private ArrayList<Shape> undoList = new ArrayList<>();
 
     // constructor: set up window
     public DrawPanel()
@@ -153,7 +154,15 @@ public class DrawPanel extends JPanel implements MouseListener
     {
         if ( shapeList.isEmpty())
             return;
-        shapeList.remove(shapeList.size() - 1);
+        Shape temp = shapeList.remove(shapeList.size() - 1);
+        
+        if(undoList.size() != 10)
+            undoList.add(temp);
+        else
+        {
+            undoList.remove(0);
+            undoList.add(temp);
+        }
         repaint();
     }
     
@@ -162,6 +171,15 @@ public class DrawPanel extends JPanel implements MouseListener
         if ( shapeList.isEmpty())
             return;
         shapeList.clear();
+        repaint();
+    }
+    
+    public void undo()
+    {
+        if(undoList.isEmpty())
+            return;
+        shapeList.add(undoList.get(undoList.size() - 1));
+        undoList.remove(undoList.size() - 1);
         repaint();
     }
 }

@@ -11,74 +11,45 @@ import paint.MenuFrame;
  * from. 
  */
 public abstract class Shape {
-    
-    /**
-     *
-     */
     public int upperLeftX;
-
-    /**
-     *
-     */
     public int upperLeftY;
-
-    /**
-     *
-     */
     public int lowerRightX;
-
-    /**
-     *
-     */
     public int lowerRightY;
-
-    /**
-     *
-     */
     public int leftX;
-
-    /**
-     *
-     */
     public int rightX;
-
-    /**
-     *
-     */
     public int leftY;
-
-    /**
-     *
-     */
     public int rightY;
-
-    /**
-     *
-     */
     public Color shapeColor;
-
-    /**
-     *
-     */
     public Color fillColor;
-
-    /**
-     *
-     */
     public float centerX;
-
-    /**
-     *
-     */
     public float centerY;
 
     public void setCoords(int x, int y){
+        int lineOffsetX = x - leftX;
+        int lineOffsetY = y - leftY;
+        leftX = x;
+        leftY = y;
+        rightX = rightX + lineOffsetX;
+        rightY = rightY + lineOffsetY;
+        int xOffset = lowerRightX - upperLeftX;
+        int yOffset = lowerRightY - upperLeftY;
         upperLeftX = x;
         upperLeftY = y;
+        lowerRightX = x + xOffset;
+        lowerRightY = y + yOffset;
     }
-    public void setCenter(int x1, int y1, int x2, int y2){
-        centerX = (x1 + x2) / 2;
-        centerY = (y1 + y2) / 2;
+    
+    public void setCenter(){
+        if(this instanceof Line)
+        {
+            centerX = (leftX + rightX) / 2;
+            centerY = (leftY + rightY) / 2;
+        }
+        else
+        {
+            centerX = (upperLeftX + lowerRightX) / 2;
+            centerY = (upperLeftY + lowerRightY) / 2;
+        }
     }
 
     

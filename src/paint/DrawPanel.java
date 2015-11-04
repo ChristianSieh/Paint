@@ -128,7 +128,7 @@ public class DrawPanel extends JPanel implements MouseListener
 
             //update coords
             shapeList.get(shapeList.size()-1).setCoords(x2, y2);
-            shapeList.get(shapeList.size()-1).setCenter(x1, y1, x2, y2);
+            shapeList.get(shapeList.size()-1).setCenter();
             
             repaint();
         }

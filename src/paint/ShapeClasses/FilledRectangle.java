@@ -46,7 +46,7 @@ public class FilledRectangle extends Rectangle
      *
      */
     public void move(){
-        //stuff
+        
     }
     
     /**

@@ -38,7 +38,14 @@ public abstract class Shape {
         lowerRightX = x + xOffset;
         lowerRightY = y + yOffset;
     }
-    
+     /**
+     * @author Joseph Mowry
+     * 
+     * A method to set the center values of a given shape, special-casing the
+     * line shape, as it holds slightly different characteristics compared to
+     * a general shape.
+     * 
+     */
     public void setCenter(){
         if(this instanceof Line)
         {
@@ -119,7 +126,7 @@ public abstract class Shape {
      * 
      * An abstract method that will print information about each shape to the
      * console.
-     * @return 
+     * @return the string representation of the object
      */
     public abstract String toString();
     
@@ -130,7 +137,7 @@ public abstract class Shape {
      * 
      * @param x1
      * @param x2
-     * @return
+     * @return the minimum value
      */
     public int min (int x1, int x2)
     {
@@ -146,7 +153,7 @@ public abstract class Shape {
      * 
      * @param x1
      * @param x2
-     * @return
+     * @return the maximum value
      */
     public int max (int x1, int x2)
     {

@@ -19,7 +19,7 @@ import javax.swing.JColorChooser;
 /** MenuFrame class
  * @author Dr. John Weiss(Original author for this class. Later mentioned as JW)
  * @author Christian Sieh
- * @author Joe Mowry
+ * @author Joseph Mowry
  * 
  * This class extends JFrame and implements the menus and buttons for the
  * paint program. Also, handles key events.
@@ -39,7 +39,7 @@ public class MenuFrame extends JFrame implements KeyListener
     /** MenuFrame constructor
      * @author Dr. John Weiss (original author for this constructor)
      * @author Christian Sieh
-     * @author Joe Mowry
+     * @author Joseph Mowry
      * 
      *  This constructor builds the GUI by adding a container that holds the
      * DrawPanel and a MenuBar with various menus and menu items. The menu
@@ -155,14 +155,38 @@ public class MenuFrame extends JFrame implements KeyListener
         menuBar.add( menu );
         mItem = new JMenuItem( "Help" );
         mItem.addActionListener((ActionEvent ae) -> {
-            System.out.println( "Abandon all help, ye who enter here." );
+            JOptionPane.showMessageDialog( null, 
+                    "\n\nLeft-click and drag to draw\n" +
+                    "Right-click near the center of a shape and drag to move that shape\n\n" +
+                    "Use the two color pickers to choose an outline (left) and a fill color (right)\n" +
+                    "       NOTE: You can also hover over the pickers\n " +
+                    "       if you ever forget which one is which!\n\n" +
+                    "Keyboard Shortcuts: \n\n" +
+                    "'d'                                -                   delete the topmost shape\n" +
+                    "'c'                                -                   clear the screen of all shapes\n" +
+                    "ESC/'q'                        -                   exit the program\n" +
+                    "CTRL+'Z'                    -                   undo the last delete (does not revert a \"clear\" option \n\n" +
+                    "Tips on moving shapes:\n" +
+                    "*Try to click nearest to the center of the desired shape to move it\n" +
+                    "*When releasing the right-mouse button after dragging, the upper left corner of the shape\n" +
+                    "       will appear at the tip of the mouse, not the center of the shape.\n" +
+                    "*To avoid undesired selections, in order to select a shape to move, the cursor must be withi\n" +
+                    "       a certain distance from the center of that shape.\n" +
+                    "*When a shape is moved, it is automatically brought to the front of the canvas.\n" 
+                    , "Helpful Tips",
+                    JOptionPane.INFORMATION_MESSAGE );
         });
         //About Item - JW
         menu.add( mItem );
         mItem = new JMenuItem( "About" );
         mItem.addActionListener((ActionEvent ae) -> {
-            JOptionPane.showMessageDialog( null, "Authors: Christian Sieh\n"
-                    + "Joe Mowry", "About Paint",
+            JOptionPane.showMessageDialog( null, "Authors: Christian Sieh &"
+                    + " Joseph Mowry\n\n" + "Class: CSC 461\n" + "Program #2: Java"
+                    + " Paint Program" + "\n\nDescription: \n\n" + "This program "
+                    + "implements a basic paint program that allows you to draw various shapes"
+                    + " in different\n colors, and allows you to move them by right"
+                    + "-clicking toward the center of the shape and dragging!\n\n Enjoy!"
+                    , "About Paint\n",
                     JOptionPane.INFORMATION_MESSAGE );
         });
         menu.add( mItem );
@@ -177,7 +201,7 @@ public class MenuFrame extends JFrame implements KeyListener
     /**
      * @author John Weiss
      * @param s
-     * @return
+     * @return true or false
      * 
      * This method will set the shape selection based on the radio button
      * selected in the Shape menu.
@@ -213,7 +237,9 @@ public class MenuFrame extends JFrame implements KeyListener
     public void keyPressed( KeyEvent event )
     {
         //Exits the application
-        if ( event.getKeyChar() == 'q')
+        if ( event.getKeyChar() == 'q' )
+            System.exit( 0 );
+        if ( event.getKeyCode() == KeyEvent.VK_ESCAPE)
             System.exit( 0 );
         //Deletes the most recently drawn shape
         if ( event.getKeyChar() == 'd')

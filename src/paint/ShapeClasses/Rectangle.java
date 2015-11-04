@@ -40,7 +40,7 @@ public class Rectangle extends Shape
      *
      */
     public void move(){
-        //stuff
+
     }
     
     /**

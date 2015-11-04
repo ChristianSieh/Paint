@@ -41,7 +41,7 @@ public class Ellipse extends Shape
      *
      */
     public void move(){
-        //stuff
+        
     }
     
     /**

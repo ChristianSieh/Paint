@@ -46,7 +46,7 @@ public class FilledEllipse extends Ellipse
      *
      */
     public void move(){
-        //stuff
+        
     }
     
     /**

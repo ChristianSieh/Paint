@@ -21,7 +21,6 @@ import paint.ShapeClasses.*;
  */
 public class DrawPanel extends JPanel implements MouseListener
 {
-    //TODO: set up a size depending on the shape
     private int x1 = 0, y1 = 0, x2 = 0, y2 = 0, size;
     private boolean leftButtonPress = false, rightButtonPress = false;
     private int offsetX = 0, offsetY = 0;
@@ -40,7 +39,17 @@ public class DrawPanel extends JPanel implements MouseListener
     public void mouseEntered( MouseEvent event ) { }
     public void mouseExited( MouseEvent event ) { }
 
-    // mouse button press events (start drawing)
+    /**
+     * @author Joseph Mowry 
+     * @author Christian Sieh
+     * 
+     * A method to handle a mouse click event. It retrieves
+     * coordinates by the clicking position and determines whether
+     * it is a left or right click, setting the flag for drawing or 
+     * moving a shape respectively.
+     * 
+     * @param event
+     */
     public void mousePressed( MouseEvent event )
     {
         // check for left mouse button press
@@ -48,26 +57,36 @@ public class DrawPanel extends JPanel implements MouseListener
         {
             x1 = event.getX();
             y1 = event.getY();
-            System.out.println( "Mouse left button click: (" + x1 + "," + y1 + ")" );
+            //System.out.println( "Mouse left button click: (" + x1 + "," + y1 + ")" );
             leftButtonPress = true;
         }
         if ( SwingUtilities.isRightMouseButton(event))
         {
             x1 = event.getX();
             y1 = event.getY();
-            System.out.println( "Mouse right button click: (" + x1 + "," + y1 + ")" );
+            //System.out.println( "Mouse right button click: (" + x1 + "," + y1 + ")" );
             rightButtonPress = true;
         }
     }
   
-    // mouse button release events (finish drawing)
+    /**
+     * @author Joseph Mowry
+     * 
+     * A method to handle a mouse release event. It retrieves
+     * coordinates by the clicking position and determines whether
+     * it is a left or right click, resetting the flag for drawing or 
+     * moving a shape respectively and calling the proper submethods to carry
+     * out the desired action.
+     * 
+     * @param event
+     */
     public void mouseReleased( MouseEvent event )
     {
         if ( leftButtonPress )
         {
             x2 = event.getX();
             y2 = event.getY();
-            System.out.println( "Mouse left button release: (" + x2 + "," + y2 + ")" );
+            //System.out.println( "Mouse left button release: (" + x2 + "," + y2 + ")" );
             leftButtonPress = false;
             
             if(x2 < x1){
@@ -110,7 +129,7 @@ public class DrawPanel extends JPanel implements MouseListener
         if ( rightButtonPress ){
             x2 = event.getX();
             y2 = event.getY();
-            System.out.println( "Mouse right button release: (" + x2 + "," + y2 + ")" );
+            //System.out.println( "Mouse right button release: (" + x2 + "," + y2 + ")" );
             
             rightButtonPress = false;
             //determine closest shape
@@ -133,11 +152,19 @@ public class DrawPanel extends JPanel implements MouseListener
             repaint();
         }
     }
-    
-    public void moveSquare(int x, int y){
-        
-    }
-    
+
+    /**
+     * @author Joseph Mowry
+     * 
+     * This scans the list of shapes and determines the closest one to the
+     * clicked location, returning an index to that shape. If no such shape
+     * is found that is within the acceptable distance threshold (35 px), the
+     * function returns a -1. Optional debug printing is commented out, but
+     * left in for future review.
+     * 
+     * 
+     * @return the index of the closest shape
+     */
     public int findClosestShape(){
         double min = Double.MAX_VALUE;
         double currentResult = 0;
@@ -145,12 +172,12 @@ public class DrawPanel extends JPanel implements MouseListener
         int i = 0;
         
         for(i = 0; i < shapeList.size(); i++){
-            System.out.println( "shape " + i + " centerX: " + shapeList.get(i).centerX);
-            System.out.println( "shape " + i + " centerY: " + shapeList.get(i).centerY);
+//            System.out.println( "shape " + i + " centerX: " + shapeList.get(i).centerX);
+//            System.out.println( "shape " + i + " centerY: " + shapeList.get(i).centerY);
             currentResult = euclideanDistance(shapeList.get(i).centerX, shapeList.get(i).centerY, x1, y1);
-            System.out.println( "distance: " + currentResult);
+//            System.out.println( "distance: " + currentResult);
 
-            if(currentResult < 25)
+            if(currentResult < 50)
             {
                 if(currentResult < min){
                     min = currentResult;
@@ -158,15 +185,34 @@ public class DrawPanel extends JPanel implements MouseListener
                 }
             }
         }
-        System.out.println( "index of closest: " + minIndex);
+        //System.out.println( "index of closest: " + minIndex);
         return minIndex;
     }
     
+    /**
+     * @author Joseph Mowry
+     * 
+     * A simple method to calculate the Euclidean distance between two
+     * coordinates. Certain methods are imported from the math package for
+     * ease of use.
+     * 
+     * @param centerX
+     * @param centerY
+     * @param x2
+     * @param y2
+     * 
+     * @return floating point distance between the two points
+     */
     public double euclideanDistance(double centerX, double centerY, double x2, double y2){
         return sqrt(pow((centerX-x2),2) + pow((centerY-y2),2));
     }
-
-    // paintComponent() is the display callback function
+    /**
+     * @author Christian Sieh
+     * 
+     * The display callback function that draws each shape.
+     * 
+     * @param g the graphics object
+     */
     public void paintComponent( Graphics g )
     {
         super.paintComponent( g );
@@ -175,7 +221,12 @@ public class DrawPanel extends JPanel implements MouseListener
             x.draw(g);
         }
     }
-    
+    /**
+     * @author Christian Sieh
+     * 
+     * Deletes the most recent shape.
+     * 
+     */
     public void delete()
     {
         if ( shapeList.isEmpty())
@@ -192,6 +243,12 @@ public class DrawPanel extends JPanel implements MouseListener
         repaint();
     }
     
+    /**
+     * @author Christian Sieh
+     * 
+     * Clears the list of shapes.
+     * 
+     */
     public void clear()
     {
         if ( shapeList.isEmpty())
@@ -200,7 +257,12 @@ public class DrawPanel extends JPanel implements MouseListener
         repaint();
     }
     
-    
+    /**
+     * @author Christian Sieh
+     * 
+     * Maintains the list of shapes to be "undone" when called upon.
+     * 
+     */
     public void undo()
     {
         if(undoList.isEmpty())
